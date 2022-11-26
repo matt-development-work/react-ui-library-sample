@@ -48,7 +48,9 @@ type TreeContextProps = {
   setDOMRoot: Dispatch<SetStateAction<HTMLOListElement>>;
   setFocusedTreeNode: Dispatch<SetStateAction<TreeNode>>;
   setTag: Dispatch<SetStateAction<TreeItemElementTag>>;
+  setTouching: Dispatch<SetStateAction<boolean>>;
   tag: TreeItemElementTag;
+  touching: boolean;
 };
 
 const TreeContext: Context<TreeContextProps> = createContext<TreeContextProps>(
@@ -71,6 +73,7 @@ const TreeContextProvider = ({
   const [focusedTreeNode, setFocusedTreeNode] = useState<TreeNode>(
     {} as TreeNode
   );
+  const [touching, setTouching] = useState<boolean>(false);
 
   /**
    * Traverses a tree to find the node with the specified id.
@@ -301,7 +304,9 @@ const TreeContextProvider = ({
         setDOMRoot: setDOMRoot,
         setFocusedTreeNode: setFocusedTreeNode,
         setTag: setTag,
+        setTouching: setTouching,
         tag: tag,
+        touching: touching,
       }}
     >
       {children}
@@ -364,9 +369,12 @@ const TreeItem: ForwardRefExoticComponent<TreeItemProps &
   TreeItemElementInterface,
   TreeItemProps
 >(({ node, tag, ...props }, ref: ForwardedRef<TreeItemElementInterface>) => {
-  const { confirmFocus, focusedTreeNode, openTreeItemIds } = useContext(
-    TreeContext
-  );
+  const {
+    confirmFocus,
+    focusedTreeNode,
+    openTreeItemIds,
+    touching,
+  } = useContext(TreeContext);
   const { id, value } = useMemo<TreeNode>(() => node, [node]);
   const focused = useMemo<boolean>(() => id === focusedTreeNode.id, [
     focusedTreeNode,
@@ -421,7 +429,11 @@ const TreeItem: ForwardRefExoticComponent<TreeItemProps &
           <span
             className={`flex px-2 focus:outline-none z-20 border border-opacity-0${
               !focused
-                ? ` hover:bg-green-600 hover:bg-opacity-40 hover:border-emerald-400 hover:border-opacity-100 text-white`
+                ? `${
+                    !touching
+                      ? ' hover:bg-green-600 hover:bg-opacity-40 hover:border-emerald-400 hover:border-opacity-100'
+                      : ''
+                  } text-white`
                 : ` bg-green-600 bg-opacity-50 border-2 border-opacity-100 border-lime-400 text-lime-100`
             }`}
             onClick={(): void => {
@@ -461,7 +473,7 @@ const TreeItem: ForwardRefExoticComponent<TreeItemProps &
         {open && tag === 'a' && <TreeItemChildrenList {...childrenListProps} />}
       </Fragment>
     );
-  }, [focused, inCurrentDirectory, openTreeItemIds]);
+  }, [focused, inCurrentDirectory, openTreeItemIds, touching]);
 });
 
 interface TreeItemChildrenListProps
@@ -571,7 +583,9 @@ const TreeContainer = ({
     setData,
     setDOMRoot,
     setTag,
+    setTouching,
     tag,
+    touching,
   } = useContext(TreeContext);
   useEffect(() => {
     setData(root);
@@ -605,6 +619,25 @@ const TreeContainer = ({
     ) as TreeItemElementInterface;
     nextFocusableTreeItemElement?.focus();
   }, [focusedTreeNode]);
+  const mobile = useMemo<boolean>(
+    () =>
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      ),
+    []
+  );
+  useEffect(() => {
+    treeContainerRef.current?.addEventListener('touchstart', () => {
+      !touching && setTouching(true);
+    });
+    treeContainerRef.current?.addEventListener('touchend', () => {
+      if (!mobile) {
+        setTimeout(() => {
+          setTouching(false);
+        }, 2000);
+      }
+    });
+  }, [touching]);
   return (
     <div
       className="cursor-pointer"

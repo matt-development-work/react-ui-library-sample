@@ -16,21 +16,23 @@ type Icon = {
   unChecked: IconProp;
 };
 
-interface BaseProps extends HTMLAttributes<HTMLSpanElement> {
+export interface BaseProps extends HTMLAttributes<HTMLSpanElement> {
   disabled?: boolean;
   error?: boolean;
   label: string;
   onChange: () => void;
 }
-type CheckedProps = { checked?: boolean; icon?: Icon; indeterminate?: false };
-type IndeterminateProps = {
+export type CheckedProps = {
+  checked?: boolean;
+  icon?: Icon;
+  indeterminate?: false;
+};
+export type IndeterminateProps = {
   checked?: false;
   icon?: undefined;
   indeterminate?: boolean;
 };
 type Props = BaseProps & (CheckedProps | IndeterminateProps);
-export type CheckedVariant = BaseProps & CheckedProps;
-export type IndeterminateVariant = BaseProps & IndeterminateProps;
 
 export const Checkbox: ForwardRefExoticComponent<Props &
   RefAttributes<HTMLSpanElement>> = forwardRef<HTMLSpanElement, Props>(

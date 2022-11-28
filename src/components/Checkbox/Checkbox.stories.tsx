@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { Args, Meta, Story } from '@storybook/react';
-import { Checkbox, CheckedVariant, IndeterminateVariant } from './Checkbox';
+import {
+  Checkbox,
+  BaseProps,
+  CheckedProps,
+  IndeterminateProps,
+} from './Checkbox';
 import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+
+type CheckedVariant = BaseProps & CheckedProps;
+type IndeterminateVariant = BaseProps & IndeterminateProps;
 
 const meta: Meta<Args> = {
   title: 'Checkbox',

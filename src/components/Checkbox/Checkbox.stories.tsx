@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Args, Meta, Story } from '@storybook/react';
-import { Checkbox, Props } from './Checkbox';
+import { Checkbox, CheckedVariant, IndeterminateVariant } from './Checkbox';
 import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -13,7 +13,7 @@ const meta: Meta<Args> = {
 
 export default meta;
 
-const DefaultTemplate: Story<Props> = (args: Props) => {
+const DefaultTemplate: Story<CheckedVariant> = (args: CheckedVariant) => {
   const [checked, setChecked] = useState<boolean>(false);
   args = {
     ...args,
@@ -25,36 +25,44 @@ const DefaultTemplate: Story<Props> = (args: Props) => {
   return <Checkbox {...args} />;
 };
 
-export const Default: Story<Props> = DefaultTemplate.bind({});
+export const Default: Story<CheckedVariant> = DefaultTemplate.bind({});
 
 Default.args = {
   label: 'Default',
 };
 
-const Template: Story<Props> = (args: Props) => <Checkbox {...args} />;
+const Template: Story<CheckedVariant> = (args: CheckedVariant) => (
+  <Checkbox {...args} />
+);
 
-export const Checked: Story<Props> = Template.bind({});
+export const Checked: Story<CheckedVariant> = Template.bind({});
 
 Checked.args = {
   checked: true,
   label: 'Checked',
 };
 
-export const Disabled: Story<Props> = Template.bind({});
+export const Disabled: Story<CheckedVariant> = Template.bind({});
 
 Disabled.args = {
   disabled: true,
   label: 'Disabled',
 };
 
-export const Indeterminate: Story<Props> = Template.bind({});
+const IndeterminateTemplate: Story<IndeterminateVariant | CheckedVariant> = (
+  args: IndeterminateVariant | CheckedVariant
+) => <Checkbox {...args} />;
+
+export const Indeterminate: Story<
+  IndeterminateVariant | CheckedVariant
+> = IndeterminateTemplate.bind({});
 
 Indeterminate.args = {
   indeterminate: true,
   label: 'Indeterminate',
 };
 
-export const Error: Story<Props> = Template.bind({});
+export const Error: Story<CheckedVariant> = Template.bind({});
 
 Error.args = {
   checked: true,
@@ -62,7 +70,7 @@ Error.args = {
   label: 'Error',
 };
 
-const TemplateCustom: Story<Props> = (args: Props) => {
+const CustomTemplate: Story<CheckedVariant> = (args: CheckedVariant) => {
   const [checked, setChecked] = useState<boolean>(false);
   args = {
     ...args,
@@ -74,7 +82,7 @@ const TemplateCustom: Story<Props> = (args: Props) => {
   return <Checkbox {...args} />;
 };
 
-export const Custom: Story<Props> = TemplateCustom.bind({});
+export const Custom: Story<CheckedVariant> = CustomTemplate.bind({});
 
 Custom.args = {
   icon: {

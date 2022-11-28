@@ -28,7 +28,9 @@ type IndeterminateProps = {
   icon?: undefined;
   indeterminate?: boolean;
 };
-export type Props = BaseProps & (CheckedProps | IndeterminateProps);
+type Props = BaseProps & (CheckedProps | IndeterminateProps);
+export type CheckedVariant = BaseProps & CheckedProps;
+export type IndeterminateVariant = BaseProps & IndeterminateProps;
 
 export const Checkbox: ForwardRefExoticComponent<Props &
   RefAttributes<HTMLSpanElement>> = forwardRef<HTMLSpanElement, Props>(

@@ -1,4 +1,6 @@
 import React, {
+  ChangeEvent,
+  ChangeEventHandler,
   ForwardedRef,
   forwardRef,
   ForwardRefExoticComponent,
@@ -22,7 +24,7 @@ interface BaseProps extends HTMLAttributes<HTMLElement> {
   error?: boolean;
   icon?: Icon;
   label: string;
-  onChange: () => void;
+  onChange: ChangeEventHandler<HTMLElement>;
 }
 
 type IndeterminateProps = Omit<BaseProps, 'checked' | 'icon'> & {
@@ -74,13 +76,14 @@ export const Checkbox: ForwardRefExoticComponent<Props &
     const labelID: string = label.replace(/\s/g, '-');
     const color: string = !error ? 'emerald' : 'rose';
 
-    const handleChange = (): void => {
-      !disabled && onChange();
+    const handleChange = (e: any): void => {
+      !disabled && onChange(e as ChangeEvent<HTMLElement>);
     };
 
-    const handleKeyDown = (key: string): void => {
+    const handleKeyDown = (e: KeyboardEvent<HTMLElement>): void => {
+      const { key } = e;
       if (!disabled && [' ', 'Enter'].includes(key)) {
-        handleChange();
+        handleChange(e);
       }
     };
 
@@ -100,7 +103,7 @@ export const Checkbox: ForwardRefExoticComponent<Props &
               : ' cursor-default'
           }${hasValue ? ` ${!icon.unChecked ? `bg-${color}-600` : ''}` : ''}`}
           data-testid="checkbox"
-          onKeyDown={(e: KeyboardEvent<HTMLElement>) => handleKeyDown(e.key)}
+          onKeyDown={handleKeyDown}
           ref={ref}
           role="checkbox"
           tabIndex={0}

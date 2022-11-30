@@ -481,10 +481,10 @@ const Template: Story<TreeProps> = (args: TreeProps): JSX.Element => {
         <Tree {...args} />
       </Card>
       <span className="hidden">
-        <span className="overflow-y-hidden border-opacity-0 bg-emerald-700 border-emerald-500 hover:bg-emerald-100" />
-        <span className="overflow-y-scroll" />
-        <span className="bg-emerald-600 border-rose-600" />
-        <span className="bg-rose-600 border-emerald-600" />
+        <span className="overflow-y-hidden border-opacity-0 bg-emerald-700 border-emerald-500 hover:bg-emerald-100 hover:shadow-sm" />
+        <span className="overflow-y-scroll hover:shadow-md" />
+        <span className="bg-emerald-600 border-rose-600 hover:shadow-lg" />
+        <span className="bg-rose-600 border-emerald-600 hover:shadow-xl" />
       </span>
     </div>
   );

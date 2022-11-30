@@ -12,46 +12,60 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 type Icon = {
   checked: IconProp;
-  className: string | undefined;
-  unChecked: IconProp;
+  className?: string;
+  unChecked?: IconProp;
 };
 
-interface BaseProps extends HTMLAttributes<HTMLSpanElement> {
+interface BaseProps extends HTMLAttributes<HTMLElement> {
+  checked?: boolean;
   disabled?: boolean;
   error?: boolean;
+  icon?: Icon;
   label: string;
   onChange: () => void;
 }
-export interface CheckedProps extends BaseProps {
-  checked?: boolean;
-  icon?: Icon;
-  indeterminate?: false;
-}
-export interface IndeterminateProps extends BaseProps {
-  checked?: false;
-  icon?: undefined;
-  indeterminate?: boolean;
-}
 
-type Props = CheckedProps | IndeterminateProps;
+type IndeterminateProps = Omit<BaseProps, 'checked' | 'icon'> & {
+  indeterminate?: boolean;
+};
+
+export type Props = BaseProps | IndeterminateProps;
 
 export const Checkbox: ForwardRefExoticComponent<Props &
   RefAttributes<HTMLSpanElement>> = forwardRef<HTMLSpanElement, Props>(
   (
-    {
-      checked = false,
-      disabled = false,
-      error = false,
-      icon = { checked: faCheck, unChecked: undefined },
-      indeterminate = false,
-      label,
-      onChange,
-      title,
-      ...props
-    },
+    { disabled = false, error = false, label, onChange, title, ...props },
     ref: ForwardedRef<HTMLSpanElement>
   ): JSX.Element => {
-    const hasValue: boolean = checked || indeterminate;
+    let checked: boolean;
+    if ('checked' in props && props.checked !== undefined) {
+      checked = props.checked;
+      delete props.checked;
+    } else {
+      checked = false;
+    }
+
+    let icon: Icon;
+    if ('icon' in props && props.icon !== undefined) {
+      icon = props.icon;
+      delete props.icon;
+    } else {
+      icon = {
+        checked: faCheck as IconProp,
+        className: undefined,
+        unChecked: undefined,
+      };
+    }
+
+    let indeterminate: boolean;
+    if ('indeterminate' in props && props.indeterminate !== undefined) {
+      indeterminate = props.indeterminate;
+      delete props.indeterminate;
+    } else {
+      indeterminate = false;
+    }
+
+    const hasValue: boolean = [checked, indeterminate].includes(true);
     const ariaChecked: 'false' | 'true' | 'mixed' = !indeterminate
       ? checked
         ? 'true'

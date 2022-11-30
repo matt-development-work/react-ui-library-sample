@@ -32,10 +32,10 @@ type IndeterminateProps = Omit<BaseProps, 'checked' | 'icon'> & {
 export type Props = BaseProps | IndeterminateProps;
 
 export const Checkbox: ForwardRefExoticComponent<Props &
-  RefAttributes<HTMLSpanElement>> = forwardRef<HTMLSpanElement, Props>(
+  RefAttributes<HTMLElement>> = forwardRef<HTMLElement, Props>(
   (
     { disabled = false, error = false, label, onChange, title, ...props },
-    ref: ForwardedRef<HTMLSpanElement>
+    ref: ForwardedRef<HTMLElement>
   ): JSX.Element => {
     let checked: boolean;
     if ('checked' in props && props.checked !== undefined) {
@@ -100,9 +100,7 @@ export const Checkbox: ForwardRefExoticComponent<Props &
               : ' cursor-default'
           }${hasValue ? ` ${!icon.unChecked ? `bg-${color}-600` : ''}` : ''}`}
           data-testid="checkbox"
-          onKeyDown={(e: KeyboardEvent<HTMLSpanElement>) =>
-            handleKeyDown(e.key)
-          }
+          onKeyDown={(e: KeyboardEvent<HTMLElement>) => handleKeyDown(e.key)}
           ref={ref}
           role="checkbox"
           tabIndex={0}

@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, ReactNode, useState } from 'react';
+import React, { KeyboardEvent, useState } from 'react';
 import { Args, Meta, Story } from '@storybook/react';
 import { Tree, TreeNode, TreeProps } from './Tree';
 import Card from '../Card';
@@ -8,6 +8,7 @@ import {
   faFileCode,
   faFlask,
   faFolder,
+  faFolderOpen,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faCss3,
@@ -22,7 +23,8 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 const cssIcon: IconProp = faCss3 as IconProp;
 const fileCodeIcon: IconProp = faFileCode as IconProp;
 const flaskIcon: IconProp = faFlask as IconProp;
-const folderIcon: IconProp = faFolder as IconProp;
+const closedFolderIcon: IconProp = faFolder as IconProp;
+const openFolderIcon: IconProp = faFolderOpen as IconProp;
 const gearIcon: IconProp = faCog as IconProp;
 const gitIcon: IconProp = faGitAlt as IconProp;
 const jsIcon: IconProp = faJsSquare as IconProp;
@@ -41,11 +43,9 @@ const meta: Meta<Args> = {
 
 export default meta;
 
-type PreIndexedTreeNode = {
+type PreIndexedTreeNode = Omit<TreeNode, 'children' | 'id'> & {
   children?: PreIndexedTreeNode[];
-  icon?: ReactNode;
   id?: number;
-  value: string;
 };
 
 const addIdAttributesToTreeNodes = (
@@ -73,7 +73,14 @@ let customTreeNodeData: PreIndexedTreeNode | TreeNode = {
       value: '.storybook',
       icon: (
         <FontAwesomeIcon
-          icon={folderIcon}
+          icon={closedFolderIcon}
+          className={'text-amber-300'}
+          size="sm"
+        />
+      ),
+      altIcon: (
+        <FontAwesomeIcon
+          icon={openFolderIcon}
           className={'text-amber-300'}
           size="sm"
         />
@@ -105,7 +112,14 @@ let customTreeNodeData: PreIndexedTreeNode | TreeNode = {
       value: 'dist',
       icon: (
         <FontAwesomeIcon
-          icon={folderIcon}
+          icon={closedFolderIcon}
+          className={'text-amber-300'}
+          size="sm"
+        />
+      ),
+      altIcon: (
+        <FontAwesomeIcon
+          icon={openFolderIcon}
           className={'text-amber-300'}
           size="sm"
         />
@@ -127,7 +141,14 @@ let customTreeNodeData: PreIndexedTreeNode | TreeNode = {
       value: 'src',
       icon: (
         <FontAwesomeIcon
-          icon={folderIcon}
+          icon={closedFolderIcon}
+          className={'text-amber-300'}
+          size="sm"
+        />
+      ),
+      altIcon: (
+        <FontAwesomeIcon
+          icon={openFolderIcon}
           className={'text-amber-300'}
           size="sm"
         />
@@ -137,7 +158,14 @@ let customTreeNodeData: PreIndexedTreeNode | TreeNode = {
           value: 'components',
           icon: (
             <FontAwesomeIcon
-              icon={folderIcon}
+              icon={closedFolderIcon}
+              className={'text-amber-300'}
+              size="sm"
+            />
+          ),
+          altIcon: (
+            <FontAwesomeIcon
+              icon={openFolderIcon}
               className={'text-amber-300'}
               size="sm"
             />
@@ -147,7 +175,14 @@ let customTreeNodeData: PreIndexedTreeNode | TreeNode = {
               value: 'Listbox',
               icon: (
                 <FontAwesomeIcon
-                  icon={folderIcon}
+                  icon={closedFolderIcon}
+                  className={'text-amber-300'}
+                  size="sm"
+                />
+              ),
+              altIcon: (
+                <FontAwesomeIcon
+                  icon={openFolderIcon}
                   className={'text-amber-300'}
                   size="sm"
                 />
@@ -209,7 +244,14 @@ let customTreeNodeData: PreIndexedTreeNode | TreeNode = {
               value: 'Table',
               icon: (
                 <FontAwesomeIcon
-                  icon={folderIcon}
+                  icon={closedFolderIcon}
+                  className={'text-amber-300'}
+                  size="sm"
+                />
+              ),
+              altIcon: (
+                <FontAwesomeIcon
+                  icon={openFolderIcon}
                   className={'text-amber-300'}
                   size="sm"
                 />
@@ -271,7 +313,14 @@ let customTreeNodeData: PreIndexedTreeNode | TreeNode = {
               value: 'Toolbar',
               icon: (
                 <FontAwesomeIcon
-                  icon={folderIcon}
+                  icon={closedFolderIcon}
+                  className={'text-amber-300'}
+                  size="sm"
+                />
+              ),
+              altIcon: (
+                <FontAwesomeIcon
+                  icon={openFolderIcon}
                   className={'text-amber-300'}
                   size="sm"
                 />
@@ -333,7 +382,14 @@ let customTreeNodeData: PreIndexedTreeNode | TreeNode = {
               value: 'Treegrid',
               icon: (
                 <FontAwesomeIcon
-                  icon={folderIcon}
+                  icon={closedFolderIcon}
+                  className={'text-amber-300'}
+                  size="sm"
+                />
+              ),
+              altIcon: (
+                <FontAwesomeIcon
+                  icon={openFolderIcon}
                   className={'text-amber-300'}
                   size="sm"
                 />

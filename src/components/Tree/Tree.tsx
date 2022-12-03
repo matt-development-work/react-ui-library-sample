@@ -30,9 +30,10 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export type TreeNode = {
   children?: TreeNode[];
-  icon?: ReactNode;
   id: number;
   value: string;
+  icon?: ReactNode;
+  altIcon?: ReactNode;
 };
 
 type TreeContextProps = {
@@ -442,9 +443,12 @@ const TreeItem: ForwardRefExoticComponent<TreeItemProps &
           >
             {hasChildren && (
               <i
-                className={`
-                  ${open &&
-                    'transform rotate-90 transition-transform ease-in-out duration-100'}
+                className={`mr-1
+                  ${
+                    open
+                      ? ' transform rotate-90 transition-transform ease-in-out duration-100'
+                      : ''
+                  }
                 `}
               >
                 {
@@ -462,7 +466,11 @@ const TreeItem: ForwardRefExoticComponent<TreeItemProps &
                 hasChildren ? '1' : '3'
               }${hasIcon && ' gap-x-2'}`}
             >
-              {hasIcon && <i className="flex items-center mr-1">{node.icon}</i>}
+              {hasIcon && (
+                <i className="flex items-center mr-1">
+                  {!open ? node.icon : node.altIcon ?? node.icon}
+                </i>
+              )}
               {value}
             </span>
           </span>

@@ -443,7 +443,7 @@ const TreeItem: ForwardRefExoticComponent<TreeItemProps &
           >
             {hasChildren && (
               <i
-                className={`mr-1
+                className={`mr-1 select-none
                   ${
                     open
                       ? ' transform rotate-90 transition-transform ease-in-out duration-100'

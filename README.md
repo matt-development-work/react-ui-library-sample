@@ -1,6 +1,6 @@
 # React.js TypeScript UI Component Library Sample with Testing and A11y
 
-# [Live Demo](https://react-component-library-sample.vercel.app/)
+# [Live Demo](https://react-component-library-sample.netlify.app/)
 
 ## Tech Stack
 

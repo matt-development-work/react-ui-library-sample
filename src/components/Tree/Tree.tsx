@@ -661,8 +661,11 @@ const TreeContainer = ({
       onBlur={(): void => {
         !focusedTreeNode.id && setZeroTabIndexOnFirstFocusableTreeItemElement();
       }}
-      onFocus={(): void => {
-        !focusedTreeNode.id && setFocusedTreeNode(getTreeNodeWithId(root, 1));
+      onFocus={(e): void => {
+        (e.target?.parentElement as any)?.role === 'tree' &&
+          e.target ===
+            (e.target?.parentElement as HTMLOListElement)?.firstElementChild &&
+          setFocusedTreeNode(getTreeNodeWithId(root, 1));
       }}
       onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => {
         [

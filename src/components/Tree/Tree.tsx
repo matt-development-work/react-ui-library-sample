@@ -1,12 +1,10 @@
 /**
  * Tree Component
- * @author Matt Fagan @matt-development-work <matt.dev.work@gmail.com>
  *
- * Follows the Tree View Design Pattern from the W3C WAI ARIA Authoring Practices Guide
- * https://www.w3.org/WAI/ARIA/apg/patterns/treeview/
+ * @author Matt Fagan
  *
- * NOTE: Monolithic architecture is used here FOR DISPLAY PURPOSES ONLY to minimize the file navigation that is required for the reader to be able to see the full code sample.
- * TODO: Refactor any reusable methods and classes to the local component level or global level within the codebase as applicable before deploying this package to production!
+ * NOTE: Monolithic architecture is used here for display purposes only 
+ * to minimize the file navigation required for the reader to see the full code sample.
  *
  */
 import React, {

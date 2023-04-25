@@ -15,6 +15,7 @@ import React, {
   createRef,
   DetailedHTMLProps,
   Dispatch,
+  FocusEvent,
   ForwardedRef,
   forwardRef,
   ForwardRefExoticComponent,
@@ -655,18 +656,21 @@ const TreeContainer = ({
       }
     });
   }, [touching]);
+  const handleFocus = (e: FocusEvent<HTMLDivElement | HTMLLIElement>): void => {
+    e.target.id === (e.currentTarget as any).children[0].firstElementChild?.id
+      ? setFocusedTreeNode(getTreeNodeWithId(root, 1))
+      : e.currentTarget.children[0].firstElementChild?.setAttribute(
+          'tabindex',
+          '-1'
+        );
+  };
   return (
     <div
       className="cursor-pointer"
       onBlur={(): void => {
         !focusedTreeNode.id && setZeroTabIndexOnFirstFocusableTreeItemElement();
       }}
-      onFocus={(e): void => {
-        (e.target?.parentElement as any)?.role === 'tree' &&
-          e.target ===
-            (e.target?.parentElement as HTMLOListElement)?.firstElementChild &&
-          setFocusedTreeNode(getTreeNodeWithId(root, 1));
-      }}
+      onFocus={handleFocus}
       onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => {
         [
           'Tab',

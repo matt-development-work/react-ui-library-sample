@@ -521,9 +521,9 @@ customTreeNodeData = addIdAttributesToTreeNodes(customTreeNodeData);
 const Template: Story<TreeProps> = (args: TreeProps): JSX.Element => {
   const [focusing, setFocusing] = useState<boolean>(false);
   return (
-    <div className="absolute h-5/6">
+    <div className="absolute left-0 top-0">
       <Card
-        className={`relative max-h-full pr-5 ring-1 ring-emerald-400 bg-slate-700 overflow-y-${
+        className={`relative pr-5 ring-1 ring-emerald-400 bg-slate-700 overflow-y-${
           !focusing ? 'scroll' : 'hidden'
         }`}
         hoverElevation="xl"
@@ -533,6 +533,7 @@ const Template: Story<TreeProps> = (args: TreeProps): JSX.Element => {
           ) && setFocusing(true)
         }
         onKeyUp={(): false | void => focusing && setFocusing(false)}
+        square
       >
         <Tree {...args} />
       </Card>

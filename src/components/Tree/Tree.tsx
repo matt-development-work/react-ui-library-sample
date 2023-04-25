@@ -656,7 +656,7 @@ const TreeContainer = ({
       }
     });
   }, [touching]);
-  const handleFocus = (e: FocusEvent<HTMLDivElement | HTMLLIElement>): void => {
+  const handleFocus = (e: FocusEvent<HTMLDivElement>): void => {
     e.target.id === (e.currentTarget as any).children[0].firstElementChild?.id
       ? setFocusedTreeNode(getTreeNodeWithId(root, 1))
       : e.currentTarget.children[0].firstElementChild?.setAttribute(

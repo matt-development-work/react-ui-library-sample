@@ -3,8 +3,7 @@
  *
  * @author Matt Fagan
  *
- * NOTE: Monolithic architecture is used here for display purposes only 
- * to minimize the file navigation required for the reader to see the full code sample.
+ * NOTE: Monolithic architecture is used here to minimize the file navigation required for the reader to see the full code sample.
  *
  */
 import React, {

@@ -1,6 +1,6 @@
 # React.js TypeScript UI Component Library Sample with Testing and A11y
 
-# [Tree Component](https://react-component-library-sample.netlify.app/?path=/story/tree--custom)
+# [Tree Component](https://react-component-library-sample.netlify.app/iframe.html?id=tree--custom&viewMode=story)
 
 ## Tech Stack
 
